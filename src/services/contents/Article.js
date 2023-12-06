@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import { launch } from "puppeteer";
 import { extractFromHtml } from "@extractus/article-extractor";
 
@@ -57,7 +57,7 @@ class Article {
       }
 
       this.parseTitle(article);
-      this.parseContent(article);
+      this.parseContent(article, pageContent);
       this.parseSource(article, pageContent);
     } catch (error) {
       console.error(`An unexpected error occurred: ${error}`);
@@ -74,9 +74,9 @@ class Article {
     }
   }
 
-  parseContent(article) {
+  parseContent(article, pageContent) {
     try {
-      const $ = cheerio.load(article.content || "");
+      const $ = load(article.content || "");
       // const $content = $();
 
       // Rewrite <img>
@@ -97,7 +97,7 @@ class Article {
 
   parseSource(article, pageContent) {
     try {
-      const $ = cheerio.load(pageContent);
+      const $ = load(pageContent);
 
       const source = "";
 

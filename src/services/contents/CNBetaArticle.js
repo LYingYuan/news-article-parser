@@ -1,5 +1,5 @@
 import Article from "./Article.js";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 
 class CNBetaArticle extends Article {
   parseTitle(article) {
@@ -11,9 +11,10 @@ class CNBetaArticle extends Article {
     }
   }
 
-  parseContent(article) {
+  parseContent(article, pageContent) {
     try {
-      const $ = cheerio.load(article.content || "");
+      const $ = load(article.content || "");
+      const $page = load(pageContent);
       const $content = $("body");
 
       // Remove the first image
@@ -33,12 +34,17 @@ class CNBetaArticle extends Article {
         $(element).parent().replaceWith(`<p align="center"><img src="${url}" alt=""></p>`);
       });
 
-      const content = $content
-        ?.html()
-        ?.replace(/\s+/g, " ")
-        .trim()
-        .replace(/<a[^>]*>([^<]*)<\/a>/g, "$1")
-        .trim();
+      // Article-summary
+      const forewordElement = $page(".article-summary p").first();
+      const foreword = forewordElement?.html().replaceAll("\n", " ").trim();
+      const mainText = $content?.html()?.replace(/\s+/g, " ").trim();
+      let content;
+
+      if (!mainText.includes(foreword)) {
+        content = `${foreword}${mainText}`.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+      } else {
+        content = `${mainText}`.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+      }
 
       if (!content || content.trim() === "") {
         throw new Error("Content is empty");
