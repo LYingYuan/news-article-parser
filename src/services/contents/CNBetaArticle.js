@@ -56,6 +56,17 @@ class CNBetaArticle extends Article {
       throw error;
     }
   }
+
+  parseSource(article, pageContent) {
+    try {
+      const $ = load(pageContent);
+      const sourceText = $(".source span").text() ? $(".source span").text() : $(".source a").text();
+      this.source = sourceText;
+    } catch (error) {
+      console.error(`Error processing CNBeta article's Source: ${error}`);
+      throw error;
+    }
+  }
 }
 
 export default CNBetaArticle;

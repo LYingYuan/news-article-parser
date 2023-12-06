@@ -13,10 +13,7 @@ async function parseNewsArticles(req, res) {
     }
 
     const data = await parseArticles(urls);
-    console.log("🧐ELowen - parseNewsArticles - data:", data)
     res.status(200).send(data);
-    // TODO delete
-    console.log("urls", urls);
   } catch (error) {
     console.error(`Error processing article: ${error.message}`);
     res.status(500).send({ error: error.message });

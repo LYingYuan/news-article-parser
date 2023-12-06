@@ -19,7 +19,7 @@ class Article {
 
       return newsArticle;
     } catch (error) {
-      console.error(`Error handling article: ${error.message}`);
+      console.error(`Error processing article: ${error.message}`);
       throw error;
     }
   }
@@ -60,7 +60,7 @@ class Article {
       this.parseContent(article, pageContent);
       this.parseSource(article, pageContent);
     } catch (error) {
-      console.error(`An unexpected error occurred: ${error}`);
+      console.error(`Error parsing article's content: ${error}`);
       throw error;
     }
   }
@@ -69,7 +69,7 @@ class Article {
     try {
       this.title = article.title || "";
     } catch (error) {
-      console.error(`An unexpected error occurred: ${error}`);
+      console.error(`Error parsing article's title: ${error}`);
       throw error;
     }
   }
@@ -90,7 +90,7 @@ class Article {
 
       this.content = content || "";
     } catch (error) {
-      console.error(`An unexpected error occurred: ${error}`);
+      console.error(`Error parsing article's content: ${error}`);
       throw error;
     }
   }
@@ -103,7 +103,7 @@ class Article {
 
       this.source = source || "";
     } catch (error) {
-      console.error(`An unexpected error occurred: ${error}`);
+      console.error(`Error parsing article's source: ${error}`);
       throw error;
     }
   }
