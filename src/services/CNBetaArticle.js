@@ -19,7 +19,7 @@ class CNBetaArticle extends Article {
       // Remove the first image
       $("img").first().remove();
 
-      // Rewrite <img>
+      // Rewrite <img />
       const imgUrls = $("img")
         .map((index, element) => {
           let url = $(element).attr("src");
@@ -31,10 +31,12 @@ class CNBetaArticle extends Article {
         .get();
 
       const urlMap = new Map();
-      await Promise.all(imgUrls.map(async url => {
-        const newUrl = await handleImage(url);
-        urlMap.set(url, newUrl);
-      }));
+      await Promise.all(
+        imgUrls.map(async url => {
+          const newUrl = await handleImage(url);
+          urlMap.set(url, newUrl);
+        })
+      );
 
       // Replace url
       $("img").each((index, element) => {
@@ -42,35 +44,18 @@ class CNBetaArticle extends Article {
         $(element).attr("src", urlMap.get(url));
       });
 
-      // Delete a
-      // $("img").each((index, element) => {
-      //   const parent = $(element).
-      // });
+      $("img").each((index, element) => {
+        // Delete <a></a>
+        $(element).unwrap("a");
+        // Delete <span></span>
+        $(element).unwrap("span");
+        // Delete <br>
+        $(element).siblings("br").remove();
+        // Center image
+        $(element).parent().attr("align", "center");
+      });
 
-      // $content.find("p > span > a > img").each(async (index, element) => {
-      //   let url = $(element).attr("src");
-      //   console.log("hello");
-      //   url = await handleImage(url);
-      //   console.log("hello2");
-      //   $(element).parent().replaceWith(`<img src="${url}" />`);
-      // });
-
-      // $content.find("p > a > img").each(async (index, element) => {
-      //   let url = $(element).attr("src");
-      //   url = await handleImage(url);
-      //   $(element).parent().replaceWith(`<img src="${url}" />`);
-      // });
-
-      // $content.find("p > img").each(async (index, element) => {
-      //   let url = $(element).attr("src");
-      //   if (url && !url.match("https")) {
-      //     url = `https:` + url;
-      //   }
-      //   url = await handleImage(url);
-      //   $(element).parent().replaceWith(`<p align="center"><img src="${url}" alt=""></p>`);
-      // });
-
-      // Article-summary
+      // Article content
       const $content = $("body");
       const $page = load(pageContent);
       const forewordElement = $page(".article-summary p").first();
