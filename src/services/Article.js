@@ -57,7 +57,7 @@ class Article {
       }
 
       this.parseTitle(article);
-      this.parseContent(article, pageContent);
+      await this.parseContent(article, pageContent);
       this.parseSource(article, pageContent);
     } catch (error) {
       console.error(`Error parsing article's content: ${error}`);
@@ -74,7 +74,7 @@ class Article {
     }
   }
 
-  parseContent(article, pageContent) {
+  async parseContent(article, pageContent) {
     try {
       const $ = load(article.content || "");
       // const $content = $();

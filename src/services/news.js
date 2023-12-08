@@ -1,4 +1,4 @@
-import CNBetaArticle from "./contents/CNBetaArticle.js";
+import CNBetaArticle from "./CNBetaArticle.js";
 
 async function parseArticles(urls) {
   try {
