@@ -111,11 +111,11 @@ class Article {
   concatInfo() {
     const source = this.source;
     const title = this.title;
-    const articleContent = `${this.content}<p>自 ${source}</p>`;
+    const content = `${this.content}<p>自 ${source}</p>`;
 
     const article = {
       title,
-      articleContent,
+      content,
     };
 
     return article;
