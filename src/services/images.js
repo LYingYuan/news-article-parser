@@ -39,10 +39,9 @@ async function handleImage(url, formatSource = "webp", formatTarget = "jpeg") {
     // Delete raw image
     await unlink(imagePath);
 
-    const newUrl = `http://localhost:3000/download/${filename}.${formatTarget}`;
+    // const newUrl = `http://localhost:3000/download/${filename}.${formatTarget}`;
+    const newUrl = `http://elowen.life:30000/download/${filename}.${formatTarget}`;
 
-    console.log("🧐ELowen - handleImage - newUrl:", newUrl)
-    // return `http://elowen.life:30000/download/${filename}.${formatTarget}`;
     return newUrl;
   } catch (error) {
     console.error(`Error handling image: ${error.message}`);
