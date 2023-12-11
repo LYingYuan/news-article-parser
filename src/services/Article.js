@@ -27,7 +27,7 @@ class Article {
   async getHTMLContent(url) {
     try {
       // Execute this code within a new headless browser instance
-      const browser = await launch({ headless: "new" });
+      const browser = await launch({ headless: "new", executablePath: "/usr/bin/chromium", args: ["--no-sandbox", "--disable-setuid-sandbox"] });
       const page = await browser.newPage();
       await page.goto(url);
 
