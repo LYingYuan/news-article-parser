@@ -83,7 +83,15 @@ class CNBetaArticle extends Article {
   parseSource(article, pageContent) {
     try {
       const $ = load(pageContent);
-      const sourceText = $(".source span").text() ? $(".source span").text() : $(".source a").text();
+      let sourceText = "";
+      if ($(".source span").text()) {
+        sourceText = $(".source span").text();
+      } else if ($(".source a").text()) {
+        sourceText = $(".source a").text();
+      } else if ($("span.source").text()) {
+        sourceText = $("span.source").text().replace("稿源：", "");
+      }
+
       this.source = sourceText;
     } catch (error) {
       console.error(`Error processing CNBeta article's Source: ${error}`);
