@@ -1,5 +1,5 @@
 import CNBetaArticle from "./CNBetaArticle.js";
-import MyDriversArticle from "./myDriversArticle.js";
+import MyDriversArticle from "./MyDriversArticle.js";
 
 async function parseArticles(urls) {
   try {
