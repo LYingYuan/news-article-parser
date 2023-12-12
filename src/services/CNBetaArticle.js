@@ -88,6 +88,8 @@ class CNBetaArticle extends Article {
         sourceText = $(".source span").text();
       } else if ($(".source a").text()) {
         sourceText = $(".source a").text();
+      } else if ($("span.source").text()) {
+        sourceText = $("span.source").text().replace("稿源：", "");
       }
 
       this.source = sourceText;
