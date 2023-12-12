@@ -64,10 +64,13 @@ class CNBetaArticle extends Article {
       let content;
 
       if (!mainText.includes(foreword)) {
-        content = `${foreword}${mainText}`.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+        content = `${foreword}${mainText}`;
       } else {
-        content = `${mainText}`.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+        content = `${mainText}`;
       }
+
+      // Extract the inner text from a tag
+      content = content.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
 
       if (!content || content.trim() === "") {
         throw new Error("Content is empty");
