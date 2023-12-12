@@ -29,7 +29,6 @@ class CNBetaArticle extends Article {
           return url;
         })
         .get();
-
       const urlMap = new Map();
       await Promise.all(
         imgUrls.map(async url => {
@@ -37,7 +36,6 @@ class CNBetaArticle extends Article {
           urlMap.set(url, newUrl);
         })
       );
-
       // Replace url
       $("img").each((index, element) => {
         const url = $(element).attr("src");

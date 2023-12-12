@@ -1,4 +1,5 @@
 import CNBetaArticle from "./CNBetaArticle.js";
+import MyDriversArticle from "./myDriversArticle.js";
 
 async function parseArticles(urls) {
   try {
@@ -12,11 +13,11 @@ async function parseArticles(urls) {
         //   const article_TechWeb = new TechWebArticle(url);
         //   await article_TechWeb.handleArticle();
         //   break;
-        // case "news.mydrivers":
-        //   // 处理快科技数据
-        //   const article_fast_tech = new MydriversArticle(url);
-        //   await article_fast_tech.handleArticle();
-        //   break;
+        case "news.mydrivers":
+          const article = new MyDriversArticle(url);
+          const news = await article.handleArticle();
+          newsArticles.push(news);
+          break;
         case "www.cnbeta":
         case "hot.cnbeta": {
           const article = new CNBetaArticle(url);
