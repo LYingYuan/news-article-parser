@@ -13,6 +13,10 @@ class Article {
   async handleArticle() {
     try {
       const url = this.url;
+
+      console.log(`========Handling url========`);
+      console.log(`${url}`);
+
       const HTMLContent = await this.getHTMLContent(url);
       await this.parseArticle(HTMLContent);
       const newsArticle = this.concatInfo();
@@ -67,6 +71,8 @@ class Article {
 
   parseTitle(article) {
     try {
+      console.log("Parsing title...");
+
       this.title = article.title || "";
     } catch (error) {
       console.error(`Error parsing article's title: ${error}`);
@@ -76,6 +82,8 @@ class Article {
 
   async parseContent(article, pageContent) {
     try {
+      console.log("Parsing content...");
+
       const $ = load(article.content || "");
       // const $content = $();
 
@@ -97,6 +105,8 @@ class Article {
 
   parseSource(article, pageContent) {
     try {
+      console.log("Parsing source...");
+
       const $ = load(pageContent);
 
       const source = "";
@@ -117,6 +127,8 @@ class Article {
       title,
       content,
     };
+
+    console.log(`============================\n`);
 
     return article;
   }
