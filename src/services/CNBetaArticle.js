@@ -53,6 +53,12 @@ class CNBetaArticle extends Article {
         $(element).parent().attr("align", "center");
       });
 
+      // Delete <a></a>
+      $("a").each((index, element) => {
+        const html = $(element).html();
+        $(element).replaceWith(html);
+      });
+
       // Article content
       const $content = $("body");
       const $page = load(pageContent);
@@ -68,7 +74,7 @@ class CNBetaArticle extends Article {
       }
 
       // Extract the inner text from a tag
-      content = content.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+      content = content.trim();
 
       if (!content || content.trim() === "") {
         throw new Error("Content is empty");
