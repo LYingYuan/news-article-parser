@@ -5,6 +5,8 @@ import handleImage from "./images.js";
 class CNBetaArticle extends Article {
   parseTitle(article) {
     try {
+      console.log("Parsing title...");
+
       this.title = article?.title?.split(" - ")[0] || "";
     } catch (error) {
       console.error(`Error processing CNBeta article's title: ${error.message}`);
@@ -14,6 +16,8 @@ class CNBetaArticle extends Article {
 
   async parseContent(article, pageContent) {
     try {
+      console.log("Parsing content...");
+
       const $ = load(article.content || "");
 
       // Remove the first image
@@ -89,6 +93,8 @@ class CNBetaArticle extends Article {
 
   parseSource(article, pageContent) {
     try {
+      console.log("Parsing source...");
+      
       const $ = load(pageContent);
       let sourceText = "";
       if ($(".source span").text()) {

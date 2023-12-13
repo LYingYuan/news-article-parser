@@ -3,6 +3,8 @@ import MyDriversArticle from "./MyDriversArticle.js";
 
 async function parseArticles(urls) {
   try {
+    console.log("\n\nStart!\n\n");
+
     let newsArticles = [];
 
     for (const url of urls) {
@@ -30,6 +32,8 @@ async function parseArticles(urls) {
           throw new Error(`No processing rules, url: ${domain}`);
       }
     }
+
+    console.log("\n\nDone!\n\n");
 
     return newsArticles;
   } catch (error) {

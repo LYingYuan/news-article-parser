@@ -5,6 +5,8 @@ import handleImage from "./images.js";
 class MyDriversArticle extends Article {
   async parseContent(article, pageContent) {
     try {
+      console.log("Parsing content...");
+      
       const $ = load(pageContent || "");
 
       $("img").each((index, element) => {
@@ -66,6 +68,8 @@ class MyDriversArticle extends Article {
 
   parseSource(article) {
     try {
+      console.log("Parsing source...");
+
       const source = article.description.match(/(?<=出处：)\S+/)[0];
 
       this.source = source || "";

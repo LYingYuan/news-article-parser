@@ -16,6 +16,9 @@ async function handleImage(url, formatSource = "webp", formatTarget = "jpeg") {
       return url;
     }
 
+    console.log("Handling img:\n");
+    console.log(url);
+
     // Download
     const response = await fetch(url);
     const name = `${filename}.${extension}`;
