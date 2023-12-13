@@ -47,7 +47,10 @@ class MyDriversArticle extends Article {
       content = $content.html();
 
       content = content.replace(/\n/g, "").replace(/\t/g, "");
-      content = content.replace(/(快科技)?\d+月\d+日(消息|讯|获悉)?/, "近日消息").replace(/<p>\d+月\d+日*/, "<p>近日");
+      content = content
+        .replace(/(快科技)?\d+月\d+日(消息|讯|获悉)?/, "近日消息")
+        .replace(/<p>\d+月\d+日*/, "<p>近日")
+        .replace(/<p>近日消息，近日，*/, "<p>近日消息，");
       content = content.trim();
 
       if (!content || content.trim() === "") {
