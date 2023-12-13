@@ -27,6 +27,18 @@ class MyDriversArticle extends Article {
         $(element).parent().attr("align", "center");
       });
 
+      // Delete <a></a>
+      $("a").each((index, element) => {
+        const html = $(element).html();
+        $(element).replaceWith(html);
+      });
+
+      // Delete span tags with red font
+      $("span[style]").each((index, element) => {
+        const html = $(element).html();
+        $(element).replaceWith(html);
+      });
+
       $(".zhuanzai").parent().remove();
 
       const $content = $(".news_info");
@@ -36,7 +48,7 @@ class MyDriversArticle extends Article {
 
       content = content.replace(/\n/g, "").replace(/\t/g, "");
       content = content.replace(/(快科技)?\d+月\d+日(消息|讯|获悉)?/, "近日消息").replace(/<p>\d+月\d+日*/, "<p>近日");
-      content = content.replace(/<a[^>]*>([^<]*)<\/a>/g, "$1").trim();
+      content = content.trim();
 
       if (!content || content.trim() === "") {
         throw new Error("Content is empty");

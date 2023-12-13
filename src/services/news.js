@@ -13,11 +13,12 @@ async function parseArticles(urls) {
         //   const article_TechWeb = new TechWebArticle(url);
         //   await article_TechWeb.handleArticle();
         //   break;
-        case "news.mydrivers":
+        case "news.mydrivers": {
           const article = new MyDriversArticle(url);
           const news = await article.handleArticle();
           newsArticles.push(news);
           break;
+        }
         case "www.cnbeta":
         case "hot.cnbeta": {
           const article = new CNBetaArticle(url);
