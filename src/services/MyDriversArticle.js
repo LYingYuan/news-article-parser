@@ -6,7 +6,7 @@ class MyDriversArticle extends Article {
   async parseContent(article, pageContent) {
     try {
       console.log("Parsing content...");
-      
+
       const $ = load(pageContent || "");
 
       $("img").each((index, element) => {
@@ -42,6 +42,7 @@ class MyDriversArticle extends Article {
       });
 
       $(".zhuanzai").parent().remove();
+      $(".url").parent().remove();
 
       const $content = $(".news_info");
       let content;
