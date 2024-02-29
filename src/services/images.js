@@ -43,7 +43,7 @@ async function handleImage(url, formatSource = "webp", formatTarget = "jpeg") {
     await unlink(imagePath);
 
     // const newUrl = `http://localhost:3000/download/${filename}.${formatTarget}`;
-    const newUrl = `http://elowen.life:3000/download/${filename}.${formatTarget}`;
+    const newUrl = `http://8.222.236.178:3000/download/${filename}.${formatTarget}`;
 
     return newUrl;
   } catch (error) {
