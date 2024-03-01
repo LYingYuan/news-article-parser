@@ -1,7 +1,7 @@
 import CNBetaArticle from "./CNBetaArticle.js";
 import MyDriversArticle from "./MyDriversArticle.js";
 
-async function parseArticles(urls) {
+async function parseArticles(urls, llmApiConfig) {
   try {
     console.log("\n\nStart!\n\n");
 
@@ -16,14 +16,14 @@ async function parseArticles(urls) {
         //   await article_TechWeb.handleArticle();
         //   break;
         case "news.mydrivers": {
-          const article = new MyDriversArticle(url);
+          const article = new MyDriversArticle(url, llmApiConfig);
           const news = await article.handleArticle();
           newsArticles.push(news);
           break;
         }
         case "www.cnbeta":
         case "hot.cnbeta": {
-          const article = new CNBetaArticle(url);
+          const article = new CNBetaArticle(url, llmApiConfig);
           const news = await article.handleArticle();
           newsArticles.push(news);
           break;

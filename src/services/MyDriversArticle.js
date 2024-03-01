@@ -1,6 +1,5 @@
 import Article from "./Article.js";
 import { load } from "cheerio";
-import handleImage from "./images.js";
 
 class MyDriversArticle extends Article {
   async parseContent(article, pageContent) {
