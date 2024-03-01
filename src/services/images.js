@@ -1,4 +1,5 @@
 import path from "path";
+import https from "https";
 import fetch from "node-fetch";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
@@ -9,18 +10,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const IMAGES_DIR = "../public/images";
 
+const agent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 async function handleImage(url, formatSource = "webp", formatTarget = "jpeg") {
   try {
     const { filename, extension } = extractFilenameAndExtension(url);
     if (extension !== formatSource) {
-      return url;
+      return downloadSourceImage(url);
     }
 
     console.log("Handling img:\n");
     console.log(url);
 
     // Download
-    const response = await fetch(url);
+    const response = await fetch(url, { agent });
     const name = `${filename}.${extension}`;
 
     if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
@@ -50,6 +55,28 @@ async function handleImage(url, formatSource = "webp", formatTarget = "jpeg") {
     console.error(`Error handling image: ${error.message}`);
     throw error;
   }
+}
+
+async function downloadSourceImage(url) {
+  const { filename, extension } = extractFilenameAndExtension(url);
+
+  const response = await fetch(url, { agent });
+  const name = `${filename}.${extension}`;
+
+  if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
+
+  const fileStream = createWriteStream(path.join(__dirname, IMAGES_DIR, name));
+
+  await new Promise((resolve, reject) => {
+    fileStream.on("finish", resolve);
+    fileStream.on("error", reject);
+    response.body.pipe(fileStream).on("error", reject);
+  });
+
+  const newUrl = `http://localhost:3000/download/${filename}.${extension}`;
+  // const newUrl = `http://elowen.life:3000/download/${filename}.${formatTarget}`;
+
+  return newUrl;
 }
 
 function extractFilenameAndExtension(url) {
