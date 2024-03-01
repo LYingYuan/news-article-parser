@@ -5,6 +5,7 @@ async function parseNewsArticles(req, res) {
   try {
     const body = req.body;
     const urls = body.urls;
+    const llmApiConfig = body.llmApiConfig;
 
     if (!urls) {
       return res.status(400).send({ error: "URL is required" });
@@ -12,7 +13,7 @@ async function parseNewsArticles(req, res) {
       throw new Error(`Invalid URL format: \n${urls.join("\n")}`);
     }
 
-    const data = await parseArticles(urls);
+    const data = await parseArticles(urls, llmApiConfig);
     res.status(200).send(data);
   } catch (error) {
     console.error(`Error processing article: ${error.message}`);

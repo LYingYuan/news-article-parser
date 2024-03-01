@@ -1,13 +1,16 @@
 import { load } from "cheerio";
 import { launch } from "puppeteer";
 import { extractFromHtml } from "@extractus/article-extractor";
+import chatWithLargeLanguageModel from "./LLMService.js";
 
 class Article {
-  constructor(url) {
+  constructor(url, llmApiConfig) {
     this.url = url;
     this.title = "";
     this.content = "";
     this.source = "";
+    this.summary = "";
+    this.llmApiConfig = llmApiConfig;
   }
 
   async handleArticle() {
@@ -63,6 +66,7 @@ class Article {
       this.parseTitle(article);
       await this.parseContent(article, pageContent);
       this.parseSource(article, pageContent);
+      await this.summarizeArticle();
     } catch (error) {
       console.error(`Error parsing article's content: ${error}`);
       throw error;
@@ -118,14 +122,40 @@ class Article {
     }
   }
 
+  async summarizeArticle() {
+    try {
+      const prompt =
+        "请你总结这篇文章，要求：1.字数严格控制在 100-120 字；2.重点利用文章中的数据，使其更有说服力；3.不要使用吸引眼球的夸张语法，理性叙事总结；4.如果有，请注明这篇文章的来源、研究团队等，并将其放置于摘要的开头；5.不要出现“这篇文章”等字眼；6.不要出现文章未提及的内容及数据。\n";
+      const message = `${prompt}${this.content}`;
+      const summary = await chatWithLargeLanguageModel(message, this.llmApiConfig);
+
+      this.summary = summary || "";
+    } catch (error) {
+      console.error(`Error summarizing article: ${error}`);
+      throw error;
+    }
+  }
+
+  async categorizeArticle() {
+    // TODO 正则表达式完成一部分
+    // TODO 调用 API 完成一部分
+    // TODO 结合
+  }
+
+  async tagArticle() {
+    // TODO 调用 API 完成
+  }
+
   concatInfo() {
     const source = this.source;
     const title = this.title;
     const content = `${this.content}<p>自 ${source}</p>`;
+    const summary = this.summary;
 
     const article = {
       title,
       content,
+      summary,
     };
 
     console.log(`============================\n`);
