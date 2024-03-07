@@ -21,7 +21,9 @@ class CNBetaArticle extends Article {
       const $ = load(article.content || "");
 
       // Remove the first image
-      $("img").first().remove();
+      if ($("img").length > 1) {
+        $(".article-summary .topic img").remove();
+      }
 
       // Rewrite <img />
       const imgUrls = $("img")
@@ -94,7 +96,7 @@ class CNBetaArticle extends Article {
   parseSource(article, pageContent) {
     try {
       console.log("Parsing source...");
-      
+
       const $ = load(pageContent);
       let sourceText = "";
       if ($(".source span").text()) {
