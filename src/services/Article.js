@@ -124,7 +124,7 @@ class Article {
 
   async summarizeArticle() {
     try {
-      if ((this.llmApiConfig = "")) {
+      if (this.llmApiConfig === "") {
         this.summary = "";
         return;
       }
