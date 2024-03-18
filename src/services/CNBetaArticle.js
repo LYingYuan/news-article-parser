@@ -20,9 +20,12 @@ class CNBetaArticle extends Article {
 
       const $ = load(article.content || "");
 
-      // Remove the first image
+      // Remove the image from the article summary
       if ($("img").length > 1) {
-        $(".article-summary .topic img").remove();
+        const firstParagraph = $("p").first();
+        if (firstParagraph.find("a > img").length > 0) {
+          firstParagraph.remove();
+        }
       }
 
       // Remove 编译自
