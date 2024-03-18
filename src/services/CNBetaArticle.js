@@ -25,6 +25,12 @@ class CNBetaArticle extends Article {
         $(".article-summary .topic img").remove();
       }
 
+      // Remove 编译自
+      const lastProgram = $("p").last();
+      if (lastProgram.text().includes("编译自")) {
+        lastProgram.remove();
+      }
+
       // Rewrite <img />
       const imgUrls = $("img")
         .map((index, element) => {
